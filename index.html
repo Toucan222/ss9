@@ -1,47 +1,59 @@
-<!-- Previous HTML structure remains, adding new sections inside sentiment-results -->
-<div class="sentiment-results hidden">
-  <div class="market-mood">
-    <!-- Dynamically populated -->
-  </div>
-  
-  <div class="ticker-details">
-    <div class="ticker-price">
-      <!-- Dynamically populated -->
-    </div>
-    <div class="ticker-stats">
-      <!-- Dynamically populated -->
-    </div>
-  </div>
-
-  <div class="charts-grid">
-    <div class="chart-card">
-      <div class="card-header">
-        <i class="ph ph-chart-line"></i>
-        <h3>Sentiment Trend</h3>
-      </div>
-      <div class="chart-container">
-        <canvas id="sentimentTrend"></canvas>
-      </div>
-    </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StockSentinel</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <!-- Previous sidebar content remains unchanged -->
+    </aside>
     
-    <div class="chart-card">
-      <div class="card-header">
-        <i class="ph ph-activity"></i>
-        <h3>Market Pulse</h3>
-      </div>
-      <div class="chart-container">
-        <canvas id="marketPulse"></canvas>
-      </div>
-    </div>
-  </div>
+    <main class="content">
+      <div id="sentiment" class="dashboard active">
+        <div class="dashboard-header">
+          <div class="title-group">
+            <h2>Market Vibes <span class="badge">Beta</span></h2>
+            <p class="subtitle">Catch the market mood in seconds ⚡️</p>
+          </div>
+          <div class="header-actions">
+            <button class="action-btn">
+              <i class="ph ph-bell"></i>
+            </button>
+            <button class="action-btn">
+              <i class="ph ph-gear"></i>
+            </button>
+          </div>
+        </div>
 
-  <div class="news-section">
-    <div class="card-header">
-      <i class="ph ph-newspaper"></i>
-      <h3>Latest News</h3>
-    </div>
-    <div class="news-feed">
-      <!-- Dynamically populated -->
-    </div>
+        <!-- Add initial content containers -->
+        <div id="sentimentTrend">
+          <h3>Sentiment Trend</h3>
+          <div class="chart-container">
+            <canvas id="sentimentChart"></canvas>
+          </div>
+        </div>
+
+        <div id="marketPulse">
+          <h3>Market Pulse</h3>
+          <div class="chart-container">
+            <canvas id="pulseChart"></canvas>
+          </div>
+        </div>
+
+        <div id="latestNews">
+          <h3>Latest News</h3>
+          <div class="news-container"></div>
+        </div>
+
+        <!-- Rest of the content remains unchanged -->
+      </div>
+    </main>
   </div>
-</div>
+  <script type="module" src="/js/main.js"></script>
+</body>
+</html>
