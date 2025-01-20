@@ -1,201 +1,208 @@
-import { createSentimentChart, createMarketPulseChart } from './charts.js';
-import { mockMarketData, getMarketMood } from './marketData.js';
+import { RiskAnalyzer } from './tools/riskAnalyzer.js';
+import { CorrelationMatrix } from './tools/correlationMatrix.js';
+import { ScenarioModeler } from './tools/scenarioModeler.js';
 
-console.log('Main.js loaded');
+let currentTool = null;
+let riskAnalyzer = null;
+let correlationMatrix = null;
+let scenarioModeler = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('DOM loaded');
-  initializeUI();
-  updateMarketMood();
-  setInterval(updateMarketMood, 30000); // Update every 30 seconds
+  initializeTools();
+  setupEventListeners();
 });
 
-function initializeUI() {
-  const searchBtn = document.getElementById('searchBtn');
-  const tickerInput = document.getElementById('tickerInput');
-  
-  // Setup ticker tags
-  document.querySelectorAll('.ticker-tag').forEach(tag => {
-    tag.addEventListener('click', () => {
-      const ticker = tag.dataset.ticker;
-      tickerInput.value = ticker;
-      analyzeSentiment(ticker);
+function initializeTools() {
+  riskAnalyzer = new RiskAnalyzer();
+  correlationMatrix = new CorrelationMatrix();
+  scenarioModeler = new ScenarioModeler();
+}
+
+function setupEventListeners() {
+  // Tool selection
+  document.querySelectorAll('.tool-selector').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const tool = e.target.dataset.tool;
+      switchTool(tool);
     });
   });
 
-  // Search functionality
-  searchBtn.addEventListener('click', () => {
-    const ticker = tickerInput.value.toUpperCase();
-    if (ticker) analyzeSentiment(ticker);
+  // Form submissions
+  document.getElementById('risk-form')?.addEventListener('submit', handleRiskAnalysis);
+  document.getElementById('correlation-form')?.addEventListener('submit', handleCorrelationAnalysis);
+  document.getElementById('scenario-form')?.addEventListener('submit', handleScenarioAnalysis);
+}
+
+function switchTool(toolName) {
+  // Hide all tool containers
+  document.querySelectorAll('.tool-container').forEach(container => {
+    container.classList.add('hidden');
   });
 
-  tickerInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-      const ticker = tickerInput.value.toUpperCase();
-      if (ticker) analyzeSentiment(ticker);
-    }
+  // Show selected tool
+  document.getElementById(`${toolName}-container`)?.classList.remove('hidden');
+  currentTool = toolName;
+}
+
+function handleRiskAnalysis(e) {
+  e.preventDefault();
+  const portfolio = parsePortfolioInput(e.target.elements.portfolio.value);
+  const results = riskAnalyzer.analyzeRisk(portfolio);
+  displayRiskResults(results);
+}
+
+function handleCorrelationAnalysis(e) {
+  e.preventDefault();
+  const assets = parseAssetsInput(e.target.elements.assets.value);
+  correlationMatrix = new CorrelationMatrix();
+  
+  assets.forEach(asset => {
+    correlationMatrix.addAsset(asset.ticker, asset.prices);
   });
-
-  // Share button functionality
-  document.querySelector('.share-btn')?.addEventListener('click', () => {
-    alert('Sharing functionality coming soon! 🚀');
-  });
-
-  // Initialize charts with default data
-  const defaultData = mockMarketData.AAPL;
-  if (defaultData) {
-    initializeCharts(defaultData);
-  }
-}
-
-function initializeCharts(data) {
-  const sentimentCanvas = document.getElementById('sentimentChart');
-  const marketPulseCanvas = document.getElementById('marketPulseChart');
-
-  if (!sentimentCanvas || !marketPulseCanvas) {
-    console.error('Canvas elements not found');
-    return;
-  }
-
-  const sentimentCtx = sentimentCanvas.getContext('2d');
-  const pulseCtx = marketPulseCanvas.getContext('2d');
-
-  const sentimentData = data.sentimentHistory.map(Number);
-  const pulseData = data.marketPulse.map(Number);
-
-  createSentimentChart(sentimentCtx, sentimentData);
-  createMarketPulseChart(pulseCtx, pulseData);
-}
-
-function analyzeSentiment(ticker) {
-  const data = mockMarketData[ticker];
   
-  if (!data) {
-    showNoDataUI(ticker);
-    return;
-  }
-
-  updateTickerInfo(data, ticker);
-  updateCharts(data);
-  updateNews(data.newsHeadlines);
-  updateKeyFactors(data.factors);
-  
-  document.querySelector('.sentiment-results').classList.remove('hidden');
+  const results = correlationMatrix.buildMatrix();
+  displayCorrelationResults(results);
 }
 
-function updateTickerInfo(data, ticker) {
-  const priceChange = data.change >= 0 ? 
-    `<span class="positive">+${data.change} (${data.changePercent}%)</span>` :
-    `<span class="negative">${data.change} (${data.changePercent}%)</span>`;
+function handleScenarioAnalysis(e) {
+  e.preventDefault();
+  const scenario = parseScenarioInput(e.target.elements.scenario.value);
+  scenarioModeler.createScenario(scenario.name, scenario.factors);
+  const results = scenarioModeler.modelScenario(scenario.name);
+  displayScenarioResults(results);
+}
 
-  document.querySelector('.ticker-price').innerHTML = `
-    <div class="current-price">$${data.price}</div>
-    <div class="price-change">${priceChange}</div>
-  `;
+// Helper functions for parsing inputs and displaying results
+function parsePortfolioInput(input) {
+  // Parse portfolio input string into structured data
+  return JSON.parse(input);
+}
 
-  document.querySelector('.ticker-stats').innerHTML = `
-    <div class="stat">
-      <span class="label">Volume</span>
-      <span class="value">${data.volume}</span>
-    </div>
-    <div class="stat">
-      <span class="label">Market Cap</span>
-      <span class="value">${data.marketCap}</span>
-    </div>
-    <div class="stat">
-      <span class="label">P/E Ratio</span>
-      <span class="value">${data.peRatio}</span>
-    </div>
-    <div class="stat">
-      <span class="label">52W Range</span>
-      <span class="value">${data.weekRange}</span>
+function parseAssetsInput(input) {
+  // Parse assets input string into structured data
+  return JSON.parse(input);
+}
+
+function parseScenarioInput(input) {
+  // Parse scenario input string into structured data
+  return JSON.parse(input);
+}
+
+function displayRiskResults(results) {
+  const container = document.getElementById('risk-results');
+  if (!container) return;
+
+  container.innerHTML = `
+    <div class="results-card">
+      <h3>Risk Analysis Results</h3>
+      <div class="metric">
+        <span class="label">Value at Risk (95%)</span>
+        <span class="value">${(results.valueAtRisk * 100).toFixed(2)}%</span>
+      </div>
+      <div class="metric">
+        <span class="label">Sharpe Ratio</span>
+        <span class="value">${results.sharpeRatio.toFixed(2)}</span>
+      </div>
+      <div class="metric">
+        <span class="label">Risk Level</span>
+        <span class="value ${results.riskLevel.toLowerCase()}">${results.riskLevel}</span>
+      </div>
+      <div class="suggestions">
+        <h4>Suggestions</h4>
+        <ul>
+          ${results.suggestions.map(s => `<li>${s}</li>`).join('')}
+        </ul>
+      </div>
     </div>
   `;
 }
 
-function updateCharts(data) {
-  const sentimentCanvas = document.getElementById('sentimentChart');
-  const marketPulseCanvas = document.getElementById('marketPulseChart');
+function displayCorrelationResults(results) {
+  const container = document.getElementById('correlation-results');
+  if (!container) return;
 
-  if (sentimentCanvas && marketPulseCanvas) {
-    const sentimentCtx = sentimentCanvas.getContext('2d');
-    const pulseCtx = marketPulseCanvas.getContext('2d');
-
-    const sentimentData = data.sentimentHistory.map(Number);
-    const pulseData = data.marketPulse.map(Number);
-
-    createSentimentChart(sentimentCtx, sentimentData);
-    createMarketPulseChart(pulseCtx, pulseData);
-  }
-}
-
-function updateNews(headlines) {
-  const newsContainer = document.querySelector('.news-feed');
-  newsContainer.innerHTML = headlines.map(news => `
-    <div class="news-item ${news.sentiment}">
-      <div class="news-content">
-        <span class="news-time">${news.time}</span>
-        <p class="news-title">${news.title}</p>
+  container.innerHTML = `
+    <div class="results-card">
+      <h3>Correlation Analysis</h3>
+      <div class="correlation-matrix">
+        ${generateCorrelationTable(results.tickers, results.matrix)}
       </div>
-      <i class="ph ${getSentimentIcon(news.sentiment)}"></i>
+      <div class="insights">
+        <h4>Key Insights</h4>
+        <ul>
+          ${results.insights.map(insight => `
+            <li class="insight ${insight.type}">
+              ${insight.assets.join(' & ')} - ${insight.suggestion}
+            </li>
+          `).join('')}
+        </ul>
+      </div>
     </div>
-  `).join('');
-}
-
-function updateKeyFactors(factors) {
-  const factorsList = document.querySelector('.factors-list');
-  if (factorsList && factors) {
-    factorsList.innerHTML = factors.map(factor => `
-      <div class="factor-tag">
-        <i class="ph ${getSentimentIcon(factor.sentiment)}"></i>
-        ${factor.text}
-      </div>
-    `).join('');
-  }
-}
-
-function updateMarketMood() {
-  const mood = getMarketMood();
-  const moodContainer = document.querySelector('.market-mood');
-  
-  if (moodContainer) {
-    moodContainer.innerHTML = `
-      <div class="mood-header">
-        <h3>Market Mood</h3>
-        <span class="vix">VIX: ${mood.vix}</span>
-      </div>
-      <div class="mood-content">
-        <div class="mood-indicator ${mood.overall.toLowerCase()}">
-          <i class="ph ph-chart-line-up"></i>
-          <span>${mood.overall}</span>
-        </div>
-        <div class="trending-tickers">
-          <span class="label">Trending</span>
-          <div class="ticker-list">
-            ${mood.trending.map(ticker => `<span class="trend-ticker">${ticker}</span>`).join('')}
-          </div>
-        </div>
-      </div>
-    `;
-  }
-}
-
-function showNoDataUI(ticker) {
-  document.querySelector('.sentiment-results').classList.remove('hidden');
-  document.querySelector('.ticker-price').innerHTML = `
-    <div class="current-price">N/A</div>
-    <div class="price-change">No data available for ${ticker}</div>
   `;
-  // Reset other UI elements
-  document.querySelector('.ticker-stats').innerHTML = '';
-  document.querySelector('.news-feed').innerHTML = '';
-  document.querySelector('.factors-list').innerHTML = '';
 }
 
-function getSentimentIcon(sentiment) {
-  switch (sentiment) {
-    case 'positive': return 'ph-trend-up';
-    case 'negative': return 'ph-trend-down';
-    default: return 'ph-minus';
-  }
+function displayScenarioResults(results) {
+  const container = document.getElementById('scenario-results');
+  if (!container) return;
+
+  container.innerHTML = `
+    <div class="results-card">
+      <h3>Scenario Analysis: ${results.name}</h3>
+      <div class="metric">
+        <span class="label">Expected Impact</span>
+        <span class="value ${results.impact > 0 ? 'positive' : 'negative'}">
+          ${(results.impact * 100).toFixed(1)}%
+        </span>
+      </div>
+      <div class="metric">
+        <span class="label">Confidence Score</span>
+        <span class="value">${(results.confidence * 100).toFixed(0)}%</span>
+      </div>
+      <div class="analysis">
+        <h4>Analysis</h4>
+        <ul>
+          ${results.analysis.map(a => `<li>${a}</li>`).join('')}
+        </ul>
+      </div>
+      <div class="recommendations">
+        <h4>Recommendations</h4>
+        <ul>
+          ${results.recommendations.map(r => `<li>${r}</li>`).join('')}
+        </ul>
+      </div>
+    </div>
+  `;
+}
+
+function generateCorrelationTable(tickers, matrix) {
+  return `
+    <table class="correlation-table">
+      <thead>
+        <tr>
+          <th></th>
+          ${tickers.map(t => `<th>${t}</th>`).join('')}
+        </tr>
+      </thead>
+      <tbody>
+        ${matrix.map((row, i) => `
+          <tr>
+            <th>${tickers[i]}</th>
+            ${row.map(val => `
+              <td class="correlation-cell ${getCorrelationClass(val)}">
+                ${val.toFixed(2)}
+              </td>
+            `).join('')}
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+function getCorrelationClass(value) {
+  if (value > 0.7) return 'high-positive';
+  if (value < -0.7) return 'high-negative';
+  if (value > 0.3) return 'moderate-positive';
+  if (value < -0.3) return 'moderate-negative';
+  return 'neutral';
 }
