@@ -5,49 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>StockSentinel</title>
   <link rel="stylesheet" href="/css/styles.css">
+  <!-- Add Chart.js CDN before other scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 <body>
   <div class="app">
-    <aside class="sidebar">
-      <!-- Previous sidebar content remains unchanged -->
-    </aside>
-    
+    <!-- Previous sidebar content remains unchanged -->
     <main class="content">
       <div id="sentiment" class="dashboard active">
-        <div class="dashboard-header">
-          <div class="title-group">
-            <h2>Market Vibes <span class="badge">Beta</span></h2>
-            <p class="subtitle">Catch the market mood in seconds ⚡️</p>
-          </div>
-          <div class="header-actions">
-            <button class="action-btn">
-              <i class="ph ph-bell"></i>
-            </button>
-            <button class="action-btn">
-              <i class="ph ph-gear"></i>
-            </button>
-          </div>
-        </div>
+        <!-- Previous header content remains unchanged -->
 
-        <!-- Add initial content containers -->
-        <div id="sentimentTrend">
-          <h3>Sentiment Trend</h3>
-          <div class="chart-container">
+        <div class="chart-section">
+          <div class="chart-wrapper">
+            <h3>Sentiment Trend</h3>
             <canvas id="sentimentChart"></canvas>
           </div>
-        </div>
-
-        <div id="marketPulse">
-          <h3>Market Pulse</h3>
-          <div class="chart-container">
-            <canvas id="pulseChart"></canvas>
+          
+          <div class="chart-wrapper">
+            <h3>Market Pulse</h3>
+            <canvas id="marketPulseChart"></canvas>
           </div>
-        </div>
-
-        <div id="latestNews">
-          <h3>Latest News</h3>
-          <div class="news-container"></div>
         </div>
 
         <!-- Rest of the content remains unchanged -->
