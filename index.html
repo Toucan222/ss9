@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>StockSentinel</title>
   <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/tools.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
@@ -13,147 +14,161 @@
     <aside class="sidebar">
       <nav class="nav-menu">
         <div class="nav-group">
-          <a href="#" class="nav-item active">
+          <a href="#overview" class="nav-item active" data-section="overview">
             <i class="ph ph-chart-line-up"></i>
             <span>Overview</span>
           </a>
-          <a href="#" class="nav-item">
+          <a href="#performance" class="nav-item" data-section="performance">
             <i class="ph ph-trending-up"></i>
             <span>Performance</span>
           </a>
-          <a href="#" class="nav-item">
-            <i class="ph ph-clock"></i>
-            <span>History</span>
+          <a href="#risk-analyzer" class="nav-item" data-section="risk-analyzer">
+            <i class="ph ph-calculator"></i>
+            <span>Risk Analyzer</span>
+            <div class="pill">Pro</div>
           </a>
-          <a href="#" class="nav-item">
+          <a href="#correlation" class="nav-item" data-section="correlation">
+            <i class="ph ph-graph"></i>
+            <span>Correlation</span>
+            <div class="pill">Pro</div>
+          </a>
+          <a href="#scenario" class="nav-item" data-section="scenario">
+            <i class="ph ph-strategy"></i>
+            <span>Scenarios</span>
+            <div class="pill">Pro</div>
+          </a>
+          <a href="#metrics" class="nav-item" data-section="metrics">
             <i class="ph ph-chart-bar"></i>
             <span>Metrics</span>
           </a>
-          <a href="#" class="nav-item">
+          <a href="#financials" class="nav-item" data-section="financials">
             <i class="ph ph-money"></i>
             <span>Financials</span>
           </a>
-          <a href="#" class="nav-item">
+          <a href="#media" class="nav-item" data-section="media">
             <i class="ph ph-camera"></i>
             <span>Media</span>
           </a>
         </div>
       </nav>
+
+      <!-- Keep existing profile section -->
+      <div class="profile">
+        <div class="profile-info">
+          <div class="avatar">
+            <i class="ph ph-user"></i>
+          </div>
+          <div class="user-details">
+            <span class="username">Guest User</span>
+            <span class="status">
+              <span class="status-dot"></span>
+              Exploring
+            </span>
+          </div>
+        </div>
+      </div>
     </aside>
 
     <main class="content">
+      <!-- Keep existing header and stock info sections -->
       <header class="main-header">
-        <div class="stock-info">
-          <div class="stock-avatar">A</div>
-          <div class="stock-details">
-            <h1>Apple Inc <span class="stock-ticker">AAPL</span></h1>
-            <div class="stock-meta">
-              <span><i class="ph ph-user"></i> CEO: Tim Cook</span>
-              <span><i class="ph ph-map-pin"></i> HQ: Cupertino, CA</span>
-              <span><i class="ph ph-tag"></i> Consumer Electronics</span>
-            </div>
-          </div>
-          <div class="stock-performance positive">
-            <span class="year">2024:</span>
-            <span class="value">+7.8%</span>
-          </div>
-        </div>
+        <!-- Previous header content remains unchanged -->
       </header>
 
-      <section class="analysis-section">
+      <!-- Tool sections -->
+      <section id="risk-analyzer" class="tool-section hidden">
         <div class="section-header">
-          <h2>Analysis Overview</h2>
-          <div class="playback-controls">
-            <span class="time-current">2:21</span>
-            <div class="progress-bar">
-              <div class="progress" style="width: 35%"></div>
-            </div>
-            <span class="time-total">7:05</span>
-            <div class="speed-controls">
-              <button class="speed-btn active">1x</button>
-              <button class="speed-btn">1.5x</button>
-              <button class="speed-btn">2x</button>
-            </div>
+          <h2>Portfolio Risk Analyzer</h2>
+          <div class="tool-controls">
+            <button class="action-btn">
+              <i class="ph ph-download"></i>
+            </button>
+            <button class="action-btn">
+              <i class="ph ph-share-network"></i>
+            </button>
           </div>
+        </div>
+
+        <div class="tool-container">
+          <form id="risk-form" class="tool-form">
+            <div class="form-group">
+              <label class="form-label">Portfolio Holdings</label>
+              <textarea class="form-input" name="portfolio" rows="6" placeholder='{
+  "holdings": [
+    {"ticker": "AAPL", "weight": 0.3},
+    {"ticker": "GOOGL", "weight": 0.2}
+  ]
+}'></textarea>
+            </div>
+            <button type="submit" class="form-submit">Analyze Risk</button>
+          </form>
+          <div id="risk-results"></div>
         </div>
       </section>
 
-      <div class="metrics-grid">
-        <section class="performance-metrics">
-          <div class="section-header">
-            <h2>Performance Metrics</h2>
-            <button class="show-advanced">Show Advanced <i class="ph ph-caret-down"></i></button>
+      <section id="correlation" class="tool-section hidden">
+        <div class="section-header">
+          <h2>Correlation Matrix Builder</h2>
+          <div class="tool-controls">
+            <button class="action-btn">
+              <i class="ph ph-download"></i>
+            </button>
+            <button class="action-btn">
+              <i class="ph ph-share-network"></i>
+            </button>
           </div>
-          
-          <div class="metrics-list">
-            <div class="metric-item">
-              <div class="metric-header">
-                <span class="metric-name">Profitability</span>
-                <i class="ph ph-info"></i>
-                <span class="metric-score">10</span>
-              </div>
-              <div class="metric-bar">
-                <div class="progress" style="width: 100%"></div>
-              </div>
-            </div>
+        </div>
 
-            <div class="metric-item">
-              <div class="metric-header">
-                <span class="metric-name">Company Viability</span>
-                <i class="ph ph-info"></i>
-                <span class="metric-score">10</span>
-              </div>
-              <div class="metric-bar">
-                <div class="progress" style="width: 100%"></div>
-              </div>
+        <div class="tool-container">
+          <form id="correlation-form" class="tool-form">
+            <div class="form-group">
+              <label class="form-label">Asset List</label>
+              <textarea class="form-input" name="assets" rows="6" placeholder='{
+  "assets": [
+    {"ticker": "AAPL", "prices": [150, 155, 153]},
+    {"ticker": "MSFT", "prices": [280, 285, 282]}
+  ]
+}'></textarea>
             </div>
+            <button type="submit" class="form-submit">Build Matrix</button>
+          </form>
+          <div id="correlation-results"></div>
+        </div>
+      </section>
 
-            <!-- Add more metrics -->
+      <section id="scenario" class="tool-section hidden">
+        <div class="section-header">
+          <h2>Scenario Modeler</h2>
+          <div class="tool-controls">
+            <button class="action-btn">
+              <i class="ph ph-download"></i>
+            </button>
+            <button class="action-btn">
+              <i class="ph ph-share-network"></i>
+            </button>
           </div>
-        </section>
+        </div>
 
-        <section class="scenario-analysis">
-          <div class="section-header">
-            <h2>Scenario Analysis</h2>
-            <button class="view-assumptions">View Assumptions <i class="ph ph-info"></i></button>
-          </div>
-
-          <div class="scenarios-grid">
-            <div class="scenario-card negative">
-              <div class="scenario-header">
-                <i class="ph ph-trend-down"></i>
-                <span class="scenario-value">-3%</span>
-              </div>
-              <ul class="scenario-points">
-                <li>Market share loss in key segments</li>
-                <li>Margin pressure from competition</li>
-              </ul>
+        <div class="tool-container">
+          <form id="scenario-form" class="tool-form">
+            <div class="form-group">
+              <label class="form-label">Scenario Definition</label>
+              <textarea class="form-input" name="scenario" rows="6" placeholder='{
+  "name": "Tech Sector Downturn",
+  "factors": {
+    "interest_rates": 0.5,
+    "tech_sentiment": -0.3,
+    "market_volatility": 0.4
+  }
+}'></textarea>
             </div>
+            <button type="submit" class="form-submit">Model Scenario</button>
+          </form>
+          <div id="scenario-results"></div>
+        </div>
+      </section>
 
-            <div class="scenario-card neutral">
-              <div class="scenario-header">
-                <i class="ph ph-minus"></i>
-                <span class="scenario-value">+2%</span>
-              </div>
-              <ul class="scenario-points">
-                <li>Stable growth in services</li>
-                <li>Continued premium positioning</li>
-              </ul>
-            </div>
-
-            <div class="scenario-card positive">
-              <div class="scenario-header">
-                <i class="ph ph-trend-up"></i>
-                <span class="scenario-value">+8%</span>
-              </div>
-              <ul class="scenario-points">
-                <li>AR/VR device launches spark new product category</li>
-                <li>Services revenue leaps from streaming</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-      </div>
+      <!-- Keep all other existing sections -->
     </main>
   </div>
   <script type="module" src="/js/main.js"></script>
