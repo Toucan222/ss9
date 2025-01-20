@@ -1,60 +1,70 @@
-// Add to existing main.js
 document.addEventListener('DOMContentLoaded', () => {
-  // Keep all existing initialization code
-
-  // Add section navigation
-  document.querySelectorAll('.nav-item').forEach(item => {
-    item.addEventListener('click', (e) => {
+  // Tool navigation
+  document.querySelectorAll('.nav-tab').forEach(tab => {
+    tab.addEventListener('click', (e) => {
       e.preventDefault();
-      const sectionId = e.currentTarget.getAttribute('data-section');
-      switchSection(sectionId);
+      
+      // Remove active class from all tabs
+      document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+      
+      // Add active class to clicked tab
+      tab.classList.add('active');
+      
+      // Show corresponding tool card
+      const toolId = tab.getAttribute('href').substring(1);
+      showTool(toolId);
     });
   });
+
+  // Initialize tools with default view
+  initializeTools();
 });
 
-function switchSection(sectionId) {
-  // Remove active class from all nav items and sections
-  document.querySelectorAll('.nav-item').forEach(item => {
-    item.classList.remove('active');
+function showTool(toolId) {
+  // Hide all tool cards
+  document.querySelectorAll('.tool-card').forEach(card => {
+    card.style.display = 'none';
   });
-  document.querySelectorAll('.tool-section, .dashboard').forEach(section => {
-    section.classList.add('hidden');
-  });
-
-  // Add active class to clicked nav item and show corresponding section
-  const navItem = document.querySelector(`[data-section="${sectionId}"]`);
-  const section = document.getElementById(sectionId);
   
-  if (navItem && section) {
-    navItem.classList.add('active');
-    section.classList.remove('hidden');
-  }
-
-  // Initialize tool if it's a tool section
-  if (['risk-analyzer', 'correlation', 'scenario'].includes(sectionId)) {
-    initializeTool(sectionId);
+  // Show selected tool card
+  const selectedTool = document.getElementById(toolId);
+  if (selectedTool) {
+    selectedTool.style.display = 'block';
   }
 }
 
-function initializeTool(toolId) {
-  // Tool-specific initialization logic
-  switch (toolId) {
-    case 'risk-analyzer':
-      if (!window.riskAnalyzer) {
-        window.riskAnalyzer = new RiskAnalyzer();
-      }
-      break;
-    case 'correlation':
-      if (!window.correlationMatrix) {
-        window.correlationMatrix = new CorrelationMatrix();
-      }
-      break;
-    case 'scenario':
-      if (!window.scenarioModeler) {
-        window.scenarioModeler = new ScenarioModeler();
-      }
-      break;
+function initializeTools() {
+  // Show default tool (first one)
+  const firstTool = document.querySelector('.tool-card');
+  if (firstTool) {
+    firstTool.style.display = 'block';
   }
+
+  // Initialize sliders and other interactive elements
+  initializeSliders();
 }
 
-// Keep all other existing functions
+function initializeSliders() {
+  document.querySelectorAll('.slider').forEach(slider => {
+    slider.addEventListener('input', (e) => {
+      const value = e.target.value;
+      const label = e.target.parentElement.querySelector('label');
+      updateSliderLabel(label, value, e.target.id);
+    });
+  });
+}
+
+function updateSliderLabel(label, value, sliderId) {
+  switch(sliderId) {
+    case 'monthlyContribution':
+      label.textContent = `Monthly Contribution: $${value}`;
+      break;
+    case 'timeHorizon':
+      label.textContent = `Time Horizon: ${value} years`;
+      break;
+    case 'expectedReturn':
+      label.textContent = `Expected Annual Return: ${value}%`;
+      break;
+    // Add cases for other sliders
+  }
+}
