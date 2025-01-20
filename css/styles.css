@@ -1,3 +1,4 @@
+/* Base styles */
 :root {
   --bg-primary: #0f172a;
   --bg-secondary: #1e293b;
@@ -20,12 +21,6 @@ body {
   background: var(--bg-primary);
   color: var(--text-primary);
   line-height: 1.5;
-}
-
-.app {
-  min-height: 100vh;
-  display: grid;
-  grid-template-rows: auto auto 1fr;
 }
 
 /* Top Navigation */
@@ -86,14 +81,6 @@ body {
   display: flex;
   align-items: center;
   gap: 1rem;
-}
-
-.user-name {
-  font-weight: 500;
-}
-
-.user-status {
-  color: var(--text-secondary);
 }
 
 .pro-badge {

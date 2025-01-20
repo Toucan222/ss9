@@ -1,185 +1,94 @@
-/* Tool Cards Specific Styles */
-.tool-card {
-  background: white;
-  border-radius: 1rem;
-  padding: 2rem;
-  color: var(--bg-primary);
-  max-width: 800px;
-  margin: 0 auto;
-}
+/* Add to existing tools.css */
 
-.input-section {
-  margin-bottom: 2rem;
-}
-
-.input-group {
-  margin-bottom: 1.5rem;
-}
-
-.input-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  color: var(--text-secondary);
-}
-
-.holdings-input, .asset-input {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.holding-ticker, .asset-ticker {
-  flex: 2;
-  padding: 0.75rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.5rem;
-  font-size: 1rem;
-}
-
-.holding-weight {
-  flex: 1;
-  padding: 0.75rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.5rem;
-  font-size: 1rem;
-}
-
-.add-holding, .add-asset {
-  padding: 0.75rem;
-  background: var(--accent-blue);
-  color: white;
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-}
-
-.holdings-list, .assets-list {
+/* Risk Analyzer Specific Styles */
+.holdings-list {
   margin-top: 1rem;
 }
 
-.metric-card {
-  background: #f8fafc;
-  padding: 1.5rem;
-  border-radius: 0.75rem;
-  text-align: center;
-}
-
-.metric-value {
-  font-size: 2rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-}
-
-.metric-label {
-  color: var(--text-secondary);
-  font-size: 0.875rem;
-}
-
-.risk-metrics, .correlation-matrix {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.timeframe-selector {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.timeframe {
-  padding: 0.5rem 1rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.5rem;
-  background: white;
-  cursor: pointer;
-}
-
-.timeframe.active {
-  background: var(--accent-blue);
-  color: white;
-  border-color: var(--accent-blue);
-}
-
-.scenario-builder {
-  margin-bottom: 2rem;
-}
-
-.scenario-section h3 {
-  margin-bottom: 1rem;
-}
-
-.factor-sliders {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.scenario-presets {
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-
-.preset-btn {
-  padding: 0.5rem 1rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.5rem;
-  background: white;
-  cursor: pointer;
-}
-
-.preset-btn:hover {
-  background: #f8fafc;
-}
-
-.impact-summary {
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
-
-.impact-value {
-  font-size: 2.5rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-}
-
-.confidence-meter {
-  text-align: center;
-}
-
-.confidence-bar {
-  height: 8px;
-  background: #e2e8f0;
-  border-radius: 4px;
-  margin-top: 0.5rem;
-  overflow: hidden;
-}
-
-.confidence-fill {
-  height: 100%;
-  background: var(--accent-blue);
-  transition: width 0.3s ease;
-}
-
-.analyze-button, .calculate-button, .model-button {
+.holding-item {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  background: var(--accent-blue);
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
+  justify-content: space-between;
+  padding: 0.75rem;
+  background: #f8fafc;
   border-radius: 0.5rem;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  margin: 0 auto;
+  margin-bottom: 0.5rem;
 }
 
-.hidden {
-  display: none;
+.holding-ticker {
+  font-weight: 600;
+}
+
+.holding-weight {
+  color: var(--text-secondary);
+}
+
+.remove-holding {
+  background: none;
+  border: none;
+  color: var(--danger-color);
+  cursor: pointer;
+  padding: 0.25rem;
+}
+
+.risk-level {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+}
+
+.risk-level.high {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--danger-color);
+}
+
+.risk-level.moderate {
+  background: rgba(245, 158, 11, 0.1);
+  color: var(--warning-color);
+}
+
+.risk-level.low {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--success-color);
+}
+
+.recommendations-list {
+  margin-top: 1rem;
+}
+
+.recommendation {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.recommendation.warning {
+  background: rgba(245, 158, 11, 0.1);
+  color: var(--warning-color);
+}
+
+.recommendation.danger {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--danger-color);
+}
+
+.recommendation.success {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--success-color);
+}
+
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--danger-color);
+  border-radius: 0.5rem;
 }

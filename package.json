@@ -8,10 +8,6 @@
     "build": "vite build",
     "preview": "vite preview"
   },
-  "dependencies": {
-    "chart.js": "^4.4.1",
-    "@phosphor-icons/web": "^2.0.3"
-  },
   "devDependencies": {
     "vite": "^5.0.0"
   }
