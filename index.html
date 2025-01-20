@@ -11,152 +11,148 @@
 <body>
   <div class="app">
     <aside class="sidebar">
-      <div class="logo-container">
-        <div class="logo-icon">
-          <i class="ph ph-chart-line-up"></i>
-        </div>
-        <h1 class="logo">sentinel</h1>
-      </div>
-      
-      <nav>
-        <ul>
-          <li class="active">
-            <a href="#sentiment" class="nav-item">
-              <i class="ph ph-trend-up"></i>
-              <span>Market Vibes</span>
-              <div class="pill">Live</div>
-            </a>
-          </li>
-        </ul>
-      </nav>
-
-      <div class="profile">
-        <div class="profile-info">
-          <div class="avatar">
-            <i class="ph ph-user"></i>
-          </div>
-          <div class="user-details">
-            <span class="username">Guest User</span>
-            <span class="status">
-              <span class="status-dot"></span>
-              Exploring
-            </span>
-          </div>
-        </div>
-      </div>
-    </aside>
-    
-    <main class="content">
-      <div id="sentiment" class="dashboard active">
-        <div class="dashboard-header">
-          <div class="title-group">
-            <h2>Market Vibes <span class="badge">Beta</span></h2>
-            <p class="subtitle">Catch the market mood in seconds ⚡️</p>
-          </div>
-          <div class="header-actions">
-            <button class="action-btn">
-              <i class="ph ph-bell"></i>
-            </button>
-            <button class="action-btn">
-              <i class="ph ph-gear"></i>
-            </button>
-          </div>
-        </div>
-
-        <div class="quick-stats">
-          <div class="stat-card">
-            <i class="ph ph-trend-up"></i>
-            <div class="stat-info">
-              <span class="stat-label">Market Mood</span>
-              <span class="stat-value">Bullish</span>
-            </div>
-          </div>
-          <div class="stat-card">
+      <nav class="nav-menu">
+        <div class="nav-group">
+          <a href="#" class="nav-item active">
+            <i class="ph ph-chart-line-up"></i>
+            <span>Overview</span>
+          </a>
+          <a href="#" class="nav-item">
+            <i class="ph ph-trending-up"></i>
+            <span>Performance</span>
+          </a>
+          <a href="#" class="nav-item">
+            <i class="ph ph-clock"></i>
+            <span>History</span>
+          </a>
+          <a href="#" class="nav-item">
             <i class="ph ph-chart-bar"></i>
-            <div class="stat-info">
-              <span class="stat-label">Trading Volume</span>
-              <span class="stat-value">High</span>
+            <span>Metrics</span>
+          </a>
+          <a href="#" class="nav-item">
+            <i class="ph ph-money"></i>
+            <span>Financials</span>
+          </a>
+          <a href="#" class="nav-item">
+            <i class="ph ph-camera"></i>
+            <span>Media</span>
+          </a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <header class="main-header">
+        <div class="stock-info">
+          <div class="stock-avatar">A</div>
+          <div class="stock-details">
+            <h1>Apple Inc <span class="stock-ticker">AAPL</span></h1>
+            <div class="stock-meta">
+              <span><i class="ph ph-user"></i> CEO: Tim Cook</span>
+              <span><i class="ph ph-map-pin"></i> HQ: Cupertino, CA</span>
+              <span><i class="ph ph-tag"></i> Consumer Electronics</span>
             </div>
           </div>
-          <div class="stat-card">
-            <i class="ph ph-activity"></i>
-            <div class="stat-info">
-              <span class="stat-label">Volatility</span>
-              <span class="stat-value">Moderate</span>
+          <div class="stock-performance positive">
+            <span class="year">2024:</span>
+            <span class="value">+7.8%</span>
+          </div>
+        </div>
+      </header>
+
+      <section class="analysis-section">
+        <div class="section-header">
+          <h2>Analysis Overview</h2>
+          <div class="playback-controls">
+            <span class="time-current">2:21</span>
+            <div class="progress-bar">
+              <div class="progress" style="width: 35%"></div>
+            </div>
+            <span class="time-total">7:05</span>
+            <div class="speed-controls">
+              <button class="speed-btn active">1x</button>
+              <button class="speed-btn">1.5x</button>
+              <button class="speed-btn">2x</button>
             </div>
           </div>
         </div>
+      </section>
 
-        <div class="search-container">
-          <div class="search-box">
-            <div class="search-wrapper">
-              <i class="ph ph-magnifying-glass"></i>
-              <input type="text" id="tickerInput" placeholder="Type any ticker...">
-              <div class="popular-tickers">
-                <span class="ticker-tag" data-ticker="AAPL">AAPL</span>
-                <span class="ticker-tag" data-ticker="GOOGL">GOOGL</span>
-                <span class="ticker-tag" data-ticker="MSFT">MSFT</span>
+      <div class="metrics-grid">
+        <section class="performance-metrics">
+          <div class="section-header">
+            <h2>Performance Metrics</h2>
+            <button class="show-advanced">Show Advanced <i class="ph ph-caret-down"></i></button>
+          </div>
+          
+          <div class="metrics-list">
+            <div class="metric-item">
+              <div class="metric-header">
+                <span class="metric-name">Profitability</span>
+                <i class="ph ph-info"></i>
+                <span class="metric-score">10</span>
+              </div>
+              <div class="metric-bar">
+                <div class="progress" style="width: 100%"></div>
               </div>
             </div>
-            <button id="searchBtn">
-              <i class="ph ph-lightning"></i>
-              Analyze
-            </button>
-          </div>
-        </div>
 
-        <div class="sentiment-results hidden">
-          <div class="ticker-details">
-            <div class="ticker-price">
-              <!-- Dynamically populated -->
-            </div>
-            <div class="ticker-stats">
-              <!-- Dynamically populated -->
-            </div>
-          </div>
-
-          <div class="charts-grid">
-            <div class="chart-card">
-              <div class="card-header">
-                <i class="ph ph-chart-line"></i>
-                <h3>Sentiment Trend</h3>
+            <div class="metric-item">
+              <div class="metric-header">
+                <span class="metric-name">Company Viability</span>
+                <i class="ph ph-info"></i>
+                <span class="metric-score">10</span>
               </div>
-              <div class="chart-container">
-                <canvas id="sentimentChart"></canvas>
+              <div class="metric-bar">
+                <div class="progress" style="width: 100%"></div>
               </div>
             </div>
-            
-            <div class="chart-card">
-              <div class="card-header">
-                <i class="ph ph-activity"></i>
-                <h3>Market Pulse</h3>
-              </div>
-              <div class="chart-container">
-                <canvas id="marketPulseChart"></canvas>
-              </div>
-            </div>
+
+            <!-- Add more metrics -->
+          </div>
+        </section>
+
+        <section class="scenario-analysis">
+          <div class="section-header">
+            <h2>Scenario Analysis</h2>
+            <button class="view-assumptions">View Assumptions <i class="ph ph-info"></i></button>
           </div>
 
-          <div class="news-section">
-            <div class="card-header">
-              <i class="ph ph-newspaper"></i>
-              <h3>Latest News</h3>
-              <button class="share-btn">
-                <i class="ph ph-share-network"></i>
-              </button>
+          <div class="scenarios-grid">
+            <div class="scenario-card negative">
+              <div class="scenario-header">
+                <i class="ph ph-trend-down"></i>
+                <span class="scenario-value">-3%</span>
+              </div>
+              <ul class="scenario-points">
+                <li>Market share loss in key segments</li>
+                <li>Margin pressure from competition</li>
+              </ul>
             </div>
-            <div class="news-feed">
-              <!-- Dynamically populated -->
-            </div>
-          </div>
 
-          <div class="key-factors">
-            <h4>Key Factors</h4>
-            <div class="factors-list">
-              <!-- Dynamically populated -->
+            <div class="scenario-card neutral">
+              <div class="scenario-header">
+                <i class="ph ph-minus"></i>
+                <span class="scenario-value">+2%</span>
+              </div>
+              <ul class="scenario-points">
+                <li>Stable growth in services</li>
+                <li>Continued premium positioning</li>
+              </ul>
+            </div>
+
+            <div class="scenario-card positive">
+              <div class="scenario-header">
+                <i class="ph ph-trend-up"></i>
+                <span class="scenario-value">+8%</span>
+              </div>
+              <ul class="scenario-points">
+                <li>AR/VR device launches spark new product category</li>
+                <li>Services revenue leaps from streaming</li>
+              </ul>
             </div>
           </div>
-        </div>
+        </section>
       </div>
     </main>
   </div>

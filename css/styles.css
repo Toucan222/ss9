@@ -1,49 +1,345 @@
-/* Previous styles remain unchanged */
+:root {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #2d3748;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --accent-blue: #3b82f6;
+  --accent-purple: #8b5cf6;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --danger-color: #ef4444;
+  --border-color: rgba(255, 255, 255, 0.1);
+}
 
-/* Add responsive styles for smaller screens */
-@media (max-width: 768px) {
-  .sidebar {
-    width: 80px;
-    padding: 1.5rem 0.75rem;
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  .logo, .nav-item span, .user-details, .pill {
-    display: none;
-  }
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.5;
+}
 
-  .content {
-    margin-left: 80px;
-    padding: 1rem;
-  }
+.app {
+  display: flex;
+  min-height: 100vh;
+}
 
-  .quick-stats {
+/* Sidebar */
+.sidebar {
+  width: 80px;
+  background: var(--bg-secondary);
+  padding: 1.5rem 0;
+  border-right: 1px solid var(--border-color);
+}
+
+.nav-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.nav-item:hover {
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
+}
+
+.nav-item.active {
+  color: var(--accent-blue);
+  position: relative;
+}
+
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 20px;
+  background: var(--accent-blue);
+  border-radius: 0 4px 4px 0;
+}
+
+.nav-item i {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.nav-item span {
+  font-size: 0.75rem;
+}
+
+/* Main Content */
+.content {
+  flex: 1;
+  padding: 2rem;
+}
+
+.main-header {
+  margin-bottom: 2rem;
+}
+
+.stock-info {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.stock-avatar {
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.stock-details h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.stock-ticker {
+  color: var(--text-secondary);
+  font-size: 1.25rem;
+}
+
+.stock-meta {
+  display: flex;
+  gap: 1.5rem;
+  color: var(--text-secondary);
+}
+
+.stock-meta span {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.stock-performance {
+  margin-left: auto;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.stock-performance.positive {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--success-color);
+}
+
+/* Analysis Section */
+.analysis-section {
+  background: var(--bg-secondary);
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.playback-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.progress-bar {
+  width: 400px;
+  height: 4px;
+  background: var(--bg-tertiary);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  background: var(--accent-blue);
+  border-radius: 2px;
+}
+
+.speed-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.speed-btn {
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.speed-btn.active {
+  background: var(--accent-blue);
+  color: var(--text-primary);
+  border-color: var(--accent-blue);
+}
+
+/* Metrics Grid */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.performance-metrics, .scenario-analysis {
+  background: var(--bg-secondary);
+  padding: 1.5rem;
+  border-radius: 12px;
+}
+
+.show-advanced, .view-assumptions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.metrics-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.metric-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.metric-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.metric-score {
+  margin-left: auto;
+  font-weight: 600;
+}
+
+.metric-bar {
+  height: 8px;
+  background: var(--bg-tertiary);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* Scenarios */
+.scenarios-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.scenario-card {
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.scenario-card.negative {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: var(--danger-color);
+}
+
+.scenario-card.neutral {
+  background: rgba(245, 158, 11, 0.1);
+  border-color: var(--warning-color);
+}
+
+.scenario-card.positive {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: var(--success-color);
+}
+
+.scenario-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.scenario-value {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.scenario-points {
+  list-style: none;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+.scenario-points li {
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.scenario-points li::before {
+  content: '•';
+  color: currentColor;
+}
+
+@media (max-width: 1200px) {
+  .metrics-grid {
     grid-template-columns: 1fr;
-  }
-
-  .search-box {
-    flex-direction: column;
-  }
-
-  .search-wrapper {
-    max-width: 100%;
-  }
-
-  .charts-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .ticker-stats {
-    grid-template-columns: 1fr 1fr;
   }
 }
 
-/* Add dark mode styles */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-dark: #0f172a;
-    --card-bg: #1e293b;
-    --text-light: #f8fafc;
-    --text-secondary: #94a3b8;
-    --border-color: rgba(255, 255, 255, 0.1);
+@media (max-width: 768px) {
+  .content {
+    padding: 1rem;
+  }
+  
+  .stock-info {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .stock-meta {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .scenarios-grid {
+    grid-template-columns: 1fr;
   }
 }
